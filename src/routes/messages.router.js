@@ -6,7 +6,7 @@ const router = Router();
 router.get('/', async (req, res) => {
     try {
         let messages = await messageModel.find().lean(); //puse el .lean() para solucionar un problema de handlebars que me aparecia sobre acceso a propiedades
-        res.render('realTimeProducts', { messages });
+        res.render('chat', { messages });
     } catch (error) {
         console.log(error);
         res.status(500).send({ status: "error", error: "Error al obtener los mensajes" });

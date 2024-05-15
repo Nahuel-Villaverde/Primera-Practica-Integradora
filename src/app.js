@@ -5,7 +5,6 @@ import handlebars from 'express-handlebars'
 import userRouter from './routes/users.router.js'
 import productRouter from './routes/products.router.js'
 import messageRouter from './routes/messages.router.js'
-import viewsRouter from './routes/views.router.js'
 
 const app = express()
 const PORT = 8080
@@ -25,8 +24,6 @@ mongoose.connect("mongodb+srv://nahuel:12345@cluster0.n6uawfv.mongodb.net/ecomme
 app.use('/api/users', userRouter)
 app.use('/api/products', productRouter)
 app.use('/api/messages', messageRouter)
-
-app.use('/realTimeProducts', viewsRouter)
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
