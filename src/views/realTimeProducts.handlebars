@@ -1,0 +1,13 @@
+<div>
+    <h1>Chat en Tiempo Real</h1>
+    <ul>
+        {{#each messages}}
+        <li><strong>{{user}}:</strong> {{message}}</li>
+        {{/each}}
+    </ul>
+    <form action="/api/messages" method="POST">
+        <input type="text" id="user" name="user" placeholder="Usuario" required>
+        <input type="text" id="message" name="message" placeholder="Mensaje" required>
+        <button type="submit">Enviar</button>
+    </form>
+</div>
