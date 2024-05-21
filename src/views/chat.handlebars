@@ -1,13 +1,40 @@
 <div>
     <h1>Chat en Tiempo Real</h1>
-    <ul>
+    <ul id="messages">
         {{#each messages}}
         <li><strong>{{user}}:</strong> {{message}}</li>
         {{/each}}
     </ul>
-    <form action="/api/messages" method="POST">
+    <form id="chatForm">
         <input type="text" id="user" name="user" placeholder="Usuario" required>
         <input type="text" id="message" name="message" placeholder="Mensaje" required>
         <button type="submit">Enviar</button>
     </form>
 </div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+
+    const form = document.getElementById('chatForm');
+    const messages = document.getElementById('messages');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const user = document.getElementById('user').value;
+        const message = document.getElementById('message').value;
+
+        // Enviar el mensaje al servidor
+        socket.emit('newMessage', { user, message });
+
+        // Limpiar los campos de entrada
+        document.getElementById('user').value = '';
+        document.getElementById('message').value = '';
+    });
+
+    socket.on('updateMessages', function(data) {
+        const newMessage = document.createElement('li');
+        newMessage.innerHTML = `<strong>${data.user}:</strong> ${data.message}`;
+        messages.appendChild(newMessage);
+    });
+</script>
