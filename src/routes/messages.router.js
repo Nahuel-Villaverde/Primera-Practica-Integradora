@@ -5,22 +5,22 @@ const router = Router();
 
 router.get('/', async (req, res) => {
     try {
-        let messages = await messageModel.find().lean(); //puse el .lean() para solucionar un problema de handlebars que me aparecia sobre acceso a propiedades
-        res.render('chat', { messages });
+        let messages = await messageModel.find().lean();
+        res.json({ status: 'success', messages });
     } catch (error) {
         console.log(error);
-        res.status(500).send({ status: "error", error: "Error al obtener los mensajes" });
+        res.status(500).json({ status: 'error', error: 'Error al obtener los mensajes' });
     }
 });
 
 router.post('/', async (req, res) => {
     let { user, message } = req.body;
     if (!user || !message) {
-        return res.send({ status: "error", error: "Faltan parametros" });
+        return res.status(400).json({ status: 'error', error: 'Faltan parámetros' });
     }
     try {
         let result = await messageModel.create({ user, message });
-        res.send({ result: "success", payload: result });
+        res.json({ status: 'success', payload: result });
     } catch (error) {
         console.log(error);
         res.status(500).send({ status: "error", error: "Error al crear el mensaje" });

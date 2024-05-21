@@ -4,7 +4,8 @@ import __dirname from './utils.js';
 import handlebars from 'express-handlebars';
 import userRouter from './routes/users.router.js';
 import productRouter from './routes/products.router.js';
-import messageRouter from './routes/messages.router.js';
+import apiMessageRouter from './routes/messages.router.js'; // Ruta para la API
+import viewMessageRouter from './routes/views/messages.router.js'; // Ruta para las vistas
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import messageModel from './dao/models/message.model.js';
@@ -28,7 +29,8 @@ mongoose.connect("mongodb+srv://nahuel:12345@cluster0.n6uawfv.mongodb.net/ecomme
 
 app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);
-app.use('/api/messages', messageRouter);
+app.use('/api/messages', apiMessageRouter); // Usar la ruta de API
+app.use('/messages', viewMessageRouter); // Usar la ruta de vistas
 
 io.on('connection', (socket) => {
     console.log('Nuevo cliente conectado');

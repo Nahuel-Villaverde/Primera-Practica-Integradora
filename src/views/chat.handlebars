@@ -24,12 +24,10 @@
         const user = document.getElementById('user').value;
         const message = document.getElementById('message').value;
 
-        // Enviar el mensaje al servidor
         socket.emit('newMessage', { user, message });
 
-        // Limpiar los campos de entrada
-        document.getElementById('user').value = '';
         document.getElementById('message').value = '';
+        document.getElementById('user').value = '';
     });
 
     socket.on('updateMessages', function(data) {
